@@ -5,3 +5,12 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+100.times do
+  Director.create(director_name: Faker::Sports::Football.player)
+  Producer.create(producer_name: Faker::Sports::Football.coach)
+  dids = Director.all.ids
+  proids = Producer.all.ids
+  Movie.create(title: Faker::Movie.title, release: Faker::Date.in_date_period,
+               rating: Faker::Number.between(from: 1, to: 5), director_id: rand(dids.last), producer_id: rand(proids.last))
+end
