@@ -1,0 +1,40 @@
+<h1 class="text-center">Movies List</h1>
+<div class="top-50 start-50 center" >
+  <div class="form-inline">
+    <%= form_tag(movie_index_path, method: :get) do %>
+      <p>Order by ID <%= select_tag(:order, options_for_select([['Ascending'], ['Descending']]),{include_blank: "--Select--", onclick: 'this.form.submit();'}) %></p>
+      <p>Filter by Rating <%= select_tag(:ratings, options_for_select(Movie.select(:rating).map(&:rating).uniq.sort),{include_blank: "--Select--", onclick: 'this.form.submit();'}) %></p>
+    <% end %>
+    <%= form_with(url:movie_index_path, method: :get) do  |form|%>
+      <p>Filter by Director <%= form.collection_select :director, Director.all, :id, :director_name, include_blank: "--Select--", onclick: 'this.form.submit();' %></p>
+      <p>Filter by Producer <%= form.collection_select :producer, Producer.all, :id, :producer_name, include_blank: "--Select--", onclick: 'this.form.submit();' %></p>
+    <% end %>
+    <%= form_tag(movie_index_path, :method => "get", id: "search-form") do %>
+      <%= text_field_tag :search, params[:search], placeholder: "Search Movies" %>
+      <%= submit_tag "Search" %>
+    <% end %>
+  </div>
+  <div>
+    <table class="table table-warning table-striped">
+      <ol class="fs-2">
+        <thead>
+          <td class="text-center"> ID </td>
+          <td class="text-center"> Title </td>
+          <td class="text-center"> Rating </td>
+          <td class="text-center"> Release </td>
+          <td class="text-center"> Director </td>
+          <td class="text-center"> Producer </td>
+        </thead>
+        <% @movies.each do |movies|%>
+          <tr>
+            <td class="text-center"><%= movies.id %></td>
+            <td class="text-center"><%= movies.title %></td>
+            <td class="text-center"><%= movies.rating %></td>
+            <td class="text-center"><%= movies.release %></td>
+            <td class="text-center"><%= movies.director.director_name %></td>
+            <td class="text-center"><%= movies.producer.producer_name %></td>
+          </tr>
+        <% end %>
+      </ol>
+    </table>
+  </div>
