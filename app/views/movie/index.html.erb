@@ -1,17 +1,18 @@
 <h1 class="text-center">Movies List</h1>
 <div class="top-50 start-50 center" >
   <div class="form-inline">
-
     <%= form_with(url:movie_index_path, method: :get) do  |form|%>
-    <p>Order by ID <%= select_tag(:order, options_for_select([['Ascending'], ['Descending']],selected: params[:order]),{include_blank: "--Select--"}) %></p>
+      <p>Order by ID <%= select_tag(:order, options_for_select([['Ascending'], ['Descending']],selected: params[:order]),{include_blank: "--Select--"}) %></p>
       <p>Filter by Rating <%= select_tag(:ratings, options_for_select(Movie.select(:rating).map(&:rating).uniq.sort, selected: params[:ratings]),{include_blank: "--Select--"}) %></p>
       <p>Filter by Director <%= form.collection_select :director, Director.all, :id, :director_name, selected: params[:director], include_blank: "--Select--" %></p>
       <p>Filter by Producer <%= form.collection_select :producer, Producer.all, :id, :producer_name, selected: params[:producer], include_blank: "--Select--" %></p>
-      <%= submit_tag "Search" %>
+      <%= submit_tag "Filter",  :class=> "btn btn-outline-success me-2" %>
+      <%= link_to "Clear" , request.path, :class=> "btn btn-outline-primary me-2" %>
     <% end %>
+    <br>
     <%= form_tag(movie_index_path, :method => "get", id: "search-form") do %>
       <%= text_field_tag :search, params[:search], placeholder: "Search Movies" %>
-      <%= submit_tag "Search" %>
+      <%= submit_tag "Search", :class=> "btn btn-warning me-2" %>
     <% end %>
   </div>
   <div>
