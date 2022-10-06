@@ -1,13 +1,13 @@
 <h1 class="text-center">Movies List</h1>
 <div class="top-50 start-50 center" >
   <div class="form-inline">
-    <%= form_tag(movie_index_path, method: :get) do %>
-      <p>Order by ID <%= select_tag(:order, options_for_select([['Ascending'], ['Descending']]),{include_blank: "--Select--", onclick: 'this.form.submit();'}) %></p>
-      <p>Filter by Rating <%= select_tag(:ratings, options_for_select(Movie.select(:rating).map(&:rating).uniq.sort),{include_blank: "--Select--", onclick: 'this.form.submit();'}) %></p>
-    <% end %>
+
     <%= form_with(url:movie_index_path, method: :get) do  |form|%>
-      <p>Filter by Director <%= form.collection_select :director, Director.all, :id, :director_name, include_blank: "--Select--", onclick: 'this.form.submit();' %></p>
-      <p>Filter by Producer <%= form.collection_select :producer, Producer.all, :id, :producer_name, include_blank: "--Select--", onclick: 'this.form.submit();' %></p>
+    <p>Order by ID <%= select_tag(:order, options_for_select([['Ascending'], ['Descending']],selected: params[:order]),{include_blank: "--Select--"}) %></p>
+      <p>Filter by Rating <%= select_tag(:ratings, options_for_select(Movie.select(:rating).map(&:rating).uniq.sort, selected: params[:ratings]),{include_blank: "--Select--"}) %></p>
+      <p>Filter by Director <%= form.collection_select :director, Director.all, :id, :director_name, selected: params[:director], include_blank: "--Select--" %></p>
+      <p>Filter by Producer <%= form.collection_select :producer, Producer.all, :id, :producer_name, selected: params[:producer], include_blank: "--Select--" %></p>
+      <%= submit_tag "Search" %>
     <% end %>
     <%= form_tag(movie_index_path, :method => "get", id: "search-form") do %>
       <%= text_field_tag :search, params[:search], placeholder: "Search Movies" %>
