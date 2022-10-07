@@ -10,6 +10,8 @@
       <%= link_to "Clear" , request.path, :class=> "btn btn-outline-primary me-2" %>
     <% end %>
     <br>
+  </div>
+  <div class="text-center">
     <%= form_tag(movie_index_path, :method => "get", id: "search-form") do %>
       <%= text_field_tag :search, params[:search], placeholder: "Search Movies" %>
       <%= submit_tag "Search", :class=> "btn btn-warning me-2" %>
@@ -39,3 +41,4 @@
       </ol>
     </table>
   </div>
+</div>
