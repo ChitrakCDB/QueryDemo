@@ -1,8 +1,8 @@
 class MovieController < ApplicationController
   def index
     # @movies = Movie.preload(:director, :producer).all
-    # @movies = Movie.eager_load(:director, :producer).all
-    @movies = Movie.includes(:director, :producer).all
+    @movies = Movie.eager_load(:director, :producer).all
+    # @movies = Movie.includes(:director, :producer).all
     #@movies = Movie.all
     @movies = @movies.order(id: :desc) if params[:order].present? && params[:order] == 'Descending'
     @movies = @movies.order(id: :asc) if params[:order].present? && params[:order] == 'Ascending'
